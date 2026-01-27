@@ -12,10 +12,11 @@ See the root Makefile for common commands to work with LangChain and AWS Bedrock
 
 ## Contents
 
-- Getting Started
-- API Reference
-- Examples
-- Troubleshooting
+This documentation is being developed. Planned sections include:
+- Getting Started (Coming soon)
+- API Reference (Coming soon)
+- Examples (Coming soon)
+- Troubleshooting (Coming soon)
 
 ## Additional Resources
 

@@ -57,9 +57,12 @@ langchain-version:
 	python -c "import langchain; print(langchain.__version__)"
 
 langchain-serve:
-	@echo "Starting LangChain server..."
-	@echo "Note: This requires a LangServe application setup"
-	@echo "Run: langchain serve"
+	@echo "To start a LangChain server, you need a LangServe application setup."
+	@echo "Example commands:"
+	@echo "  langchain serve"
+	@echo "  python -m langserve.serve"
+	@echo ""
+	@echo "For setup instructions, visit: https://python.langchain.com/docs/langserve"
 
 langchain-api-key:
 	@echo "Setting up LangChain API key..."
@@ -82,14 +85,18 @@ bedrock-configure:
 
 bedrock-list-models:
 	@echo "Listing all Bedrock models..."
+	@which aws > /dev/null 2>&1 || (echo "Error: AWS CLI is required. Install from: https://aws.amazon.com/cli/" && exit 1)
 	aws bedrock list-foundation-models --query 'modelSummaries[*].[modelId,modelName,providerName]' --output table
 
 bedrock-list-foundation-models:
 	@echo "Listing Bedrock foundation models..."
+	@which jq > /dev/null 2>&1 || (echo "Error: jq is required. Install with: sudo apt-get install jq or brew install jq" && exit 1)
+	@which aws > /dev/null 2>&1 || (echo "Error: AWS CLI is required. Install from: https://aws.amazon.com/cli/" && exit 1)
 	aws bedrock list-foundation-models --output json | jq '.modelSummaries[] | {modelId, modelName, providerName}'
 
 bedrock-get-model:
 	@echo "Getting model details for $(MODEL_ID)..."
+	@which aws > /dev/null 2>&1 || (echo "Error: AWS CLI is required. Install from: https://aws.amazon.com/cli/" && exit 1)
 	@if [ -z "$(MODEL_ID)" ]; then \
 		echo "Error: MODEL_ID not set. Usage: make bedrock-get-model MODEL_ID=anthropic.claude-v2"; \
 		exit 1; \
@@ -98,6 +105,8 @@ bedrock-get-model:
 
 bedrock-invoke-model:
 	@echo "Invoking Bedrock model $(MODEL_ID)..."
+	@which aws > /dev/null 2>&1 || (echo "Error: AWS CLI is required. Install from: https://aws.amazon.com/cli/" && exit 1)
+	@which python3 > /dev/null 2>&1 || (echo "Error: python3 is required for JSON escaping" && exit 1)
 	@if [ -z "$(MODEL_ID)" ]; then \
 		echo "Error: MODEL_ID not set. Usage: make bedrock-invoke-model MODEL_ID=anthropic.claude-v2 PROMPT='Hello'"; \
 		exit 1; \
@@ -106,33 +115,42 @@ bedrock-invoke-model:
 		echo "Error: PROMPT not set. Usage: make bedrock-invoke-model MODEL_ID=anthropic.claude-v2 PROMPT='Hello'"; \
 		exit 1; \
 	fi
-	@echo '{"prompt": "$(PROMPT)", "max_tokens_to_sample": 200}' > /tmp/bedrock_input.json
+	@echo "Note: Different models require different request formats. This uses a generic format."
+	@TMPFILE=$$(mktemp /tmp/bedrock_input.XXXXXX.json) && \
+	python3 -c 'import json, sys; print(json.dumps({"prompt": sys.argv[1], "max_tokens_to_sample": 200}))' "$(PROMPT)" > $$TMPFILE && \
+	OUTFILE=$$(mktemp /tmp/bedrock_output.XXXXXX.json) && \
 	aws bedrock-runtime invoke-model \
 		--model-id $(MODEL_ID) \
-		--body file:///tmp/bedrock_input.json \
-		/tmp/bedrock_output.json
-	@cat /tmp/bedrock_output.json
-	@rm -f /tmp/bedrock_input.json /tmp/bedrock_output.json
+		--body file://$$TMPFILE \
+		$$OUTFILE && \
+	cat $$OUTFILE && \
+	rm -f $$TMPFILE $$OUTFILE
 
 bedrock-list-agents:
 	@echo "Listing Bedrock agents..."
+	@which aws > /dev/null 2>&1 || (echo "Error: AWS CLI is required. Install from: https://aws.amazon.com/cli/" && exit 1)
 	aws bedrock-agent list-agents --query 'agentSummaries[*].[agentId,agentName,agentStatus]' --output table
 
 bedrock-list-knowledge-bases:
 	@echo "Listing Bedrock knowledge bases..."
+	@which aws > /dev/null 2>&1 || (echo "Error: AWS CLI is required. Install from: https://aws.amazon.com/cli/" && exit 1)
 	aws bedrock-agent list-knowledge-bases --query 'knowledgeBaseSummaries[*].[knowledgeBaseId,name,status]' --output table
 
 # Documentation
 docs:
-	@echo "Opening documentation..."
+	@echo "Documentation directory contents:"
 	@if [ -d "docs" ]; then \
 		cd docs && ls -la; \
+		echo ""; \
+		echo "To view the main documentation, run: cat docs/README.md"; \
 	else \
 		echo "Documentation directory not found"; \
 	fi
 
 # Testing
 test:
-	@echo "Running tests..."
-	@echo "Note: Add your test commands here"
-	@echo "Example: pytest tests/"
+	@echo "Test execution placeholder"
+	@echo "To add tests:"
+	@echo "  1. Create a tests/ directory"
+	@echo "  2. Add test files and install pytest: pip install pytest"
+	@echo "  3. Update this target to run: pytest tests/"
