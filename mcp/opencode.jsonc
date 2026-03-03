@@ -1,0 +1,89 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    // NOTE: requires docker engine running!!
+    "github": {
+      "type": "local",
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "enabled": true,
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "context7": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "{env:CONTEXT7_API_KEY}"
+      ],
+      "enabled": true
+    },
+    "mcp-atlassian": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-atlassian"
+      ],
+      "enabled": true,
+      "environment": {
+        "JIRA_URL": "{env:ATLASSIAN_URL}",
+        "JIRA_USERNAME": "{env:EMAIL}",
+        "JIRA_API_TOKEN": "{env:ATLASSIAN_API_TOKEN}",
+        "CONFLUENCE_URL": "{env:ATLASSIAN_URL}/wiki",
+        "CONFLUENCE_USERNAME": "{env:EMAIL}",
+        "CONFLUENCE_API_TOKEN": "{env:ATLASSIAN_API_TOKEN}"
+      }
+    },
+    "redpanda": {
+      "type": "remote",
+      "url": "https://docs.redpanda.com/mcp"
+    },
+    "aws-documentation-mcp-server": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "enabled": true,
+      "environment": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "aws",
+        "MCP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+      }
+    },
+    // "Lucid Software": {
+    //   "type": "remote",
+    //   "url": "https://mcp.lucid.app/mcp"
+    // }
+    "Lucid Software": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "mcp-remote",
+        "https://mcp.lucid.app/mcp"
+      ],
+    },
+    "Confluent": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@confluentinc/mcp-confluent",
+        "-e",
+        "{env:CONFLUENT_ENV_PATH}"
+      ]
+    }
+  }
+}
