@@ -1,0 +1,70 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@github/github-mcp-server", "stdio"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp",
+        "--api-key",
+        "${CONTEXT7_API_KEY}"
+      ]
+    },
+    "mcp-atlassian": {
+      "command": "uvx",
+      "args": [
+        "mcp-atlassian"
+      ],
+      "env": {
+        "JIRA_URL": "${ATLASSIAN_URL}",
+        "JIRA_USERNAME": "${EMAIL}",
+        "JIRA_API_TOKEN": "${ATLASSIAN_API_TOKEN}",
+        "CONFLUENCE_URL": "${ATLASSIAN_URL}/wiki",
+        "CONFLUENCE_USERNAME": "${EMAIL}",
+        "CONFLUENCE_API_TOKEN": "${ATLASSIAN_API_TOKEN}"
+      }
+    },
+    "redpanda": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://docs.redpanda.com/mcp"
+      ]
+    },
+    "aws-documentation-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "AWS_DOCUMENTATION_PARTITION": "aws",
+        "MCP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+      }
+    },
+    "lucid-software": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.lucid.app/mcp"
+      ]
+    },
+    "confluent": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@confluentinc/mcp-confluent",
+        "-e",
+        "${CONFLUENT_ENV_PATH}"
+      ]
+    }
+  }
+}

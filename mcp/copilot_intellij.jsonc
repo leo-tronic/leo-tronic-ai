@@ -1,0 +1,54 @@
+{
+    "servers": {
+        "github": {
+            "url": "https://api.githubcopilot.com/mcp/",
+            "requestInit": {
+                "headers": {
+                    "Authorization": "Bearer YOUR_GITHUB_PAT"
+                }
+            }
+        },
+        "context7": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@upstash/context7-mcp",
+                "--api-key",
+                "YOUR_CONTEXT7_API_KEY"
+            ]
+        },
+        "mcp-atlassian": {
+            "command": "uvx",
+            "args": [
+                "mcp-atlassian"
+            ]
+            // NOTE: IntelliJ does not support an "env" block for stdio servers.
+            // Set JIRA_URL, JIRA_USERNAME, JIRA_API_TOKEN, CONFLUENCE_URL,
+            // CONFLUENCE_USERNAME, CONFLUENCE_API_TOKEN in your shell environment
+            // before launching the IDE, or use ${input:...} prompts if supported.
+        },
+        "redpanda": {
+            "url": "https://docs.redpanda.com/mcp"
+        },
+        "aws-documentation-mcp-server": {
+            "command": "uvx",
+            "args": [
+                "awslabs.aws-documentation-mcp-server@latest"
+            ]
+            // NOTE: Set FASTMCP_LOG_LEVEL=ERROR, AWS_DOCUMENTATION_PARTITION=aws,
+            // and MCP_USER_AGENT in your shell environment before launching the IDE.
+        },
+        "lucid-software": {
+            "url": "https://mcp.lucid.app/mcp"
+        },
+        "confluent": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@confluentinc/mcp-confluent",
+                "-e",
+                "YOUR_CONFLUENT_ENV_PATH"
+            ]
+        }
+    }
+}

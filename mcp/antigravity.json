@@ -1,0 +1,59 @@
+{
+    "mcpServers": {
+        "github": {
+            "serverUrl": "https://api.githubcopilot.com/mcp/",
+            "headers": {
+                "Authorization": "Bearer YOUR_GITHUB_PAT"
+            }
+        },
+        "context7": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@upstash/context7-mcp",
+                "--api-key",
+                "YOUR_CONTEXT7_API_KEY"
+            ]
+        },
+        "mcp-atlassian": {
+            "command": "uvx",
+            "args": [
+                "mcp-atlassian"
+            ],
+            "env": {
+                "JIRA_URL": "YOUR_ATLASSIAN_URL",
+                "JIRA_USERNAME": "YOUR_EMAIL",
+                "JIRA_API_TOKEN": "YOUR_ATLASSIAN_API_TOKEN",
+                "CONFLUENCE_URL": "YOUR_ATLASSIAN_URL/wiki",
+                "CONFLUENCE_USERNAME": "YOUR_EMAIL",
+                "CONFLUENCE_API_TOKEN": "YOUR_ATLASSIAN_API_TOKEN"
+            }
+        },
+        "redpanda": {
+            "serverUrl": "https://docs.redpanda.com/mcp"
+        },
+        "aws-documentation-mcp-server": {
+            "command": "uvx",
+            "args": [
+                "awslabs.aws-documentation-mcp-server@latest"
+            ],
+            "env": {
+                "FASTMCP_LOG_LEVEL": "ERROR",
+                "AWS_DOCUMENTATION_PARTITION": "aws",
+                "MCP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+            }
+        },
+        "lucid-software": {
+            "serverUrl": "https://mcp.lucid.app/mcp"
+        },
+        "confluent": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@confluentinc/mcp-confluent",
+                "-e",
+                "YOUR_CONFLUENT_ENV_PATH"
+            ]
+        }
+    }
+}
