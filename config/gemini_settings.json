@@ -1,0 +1,38 @@
+{
+    "security": {
+        "auth": {
+            "selectedType": "oauth-personal"
+        }
+    },
+    "hasSeenIdeIntegrationNudge": true,
+    "ide": {
+        "enabled": true
+    },
+    "general": {
+        "previewFeatures": true,
+        "sessionRetention": {
+            "enabled": true,
+            "maxAge": "60d",
+            "warningAcknowledged": true
+        }
+    },
+    "experimental": {
+        "enableAgents": true
+    },
+    "mcpServers": {
+        "mcp-atlassian": {
+            "command": "uvx",
+            "args": [
+                "mcp-atlassian"
+            ],
+            "env": {
+                "JIRA_URL": "${ATLASSIAN_URL}",
+                "JIRA_USERNAME": "${EMAIL}",
+                "JIRA_API_TOKEN": "${ATLASSIAN_API_TOKEN}",
+                "CONFLUENCE_URL": "${ATLASSIAN_URL}/wiki",
+                "CONFLUENCE_USERNAME": "${EMAIL}",
+                "CONFLUENCE_API_TOKEN": "${ATLASSIAN_API_TOKEN}"
+            }
+        }
+    }
+}

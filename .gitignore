@@ -3,6 +3,7 @@ docs/features/
 docs/resources/
 docs/research/
 temp/
+personal/
 
 # MCP env files 
 mcp/confluent_env/*.env

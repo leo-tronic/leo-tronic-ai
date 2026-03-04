@@ -71,3 +71,8 @@ Google's cursor competitor. Forked from vscode. Useful if you like gemini but wa
 Populate `mcp/antigravity_mcp_config.json` with your env vars and place the file in `~/Library/Application Support/Google/Antigravity/mcp_config.json`
 
 Schema file for mcp config is located here (on MacOS): `Applications/Antigravity.app/Contents/Resources/app/extensions/antigravity/schemas/mcp_config.schema.json`
+
+#### Todo
+
+- [ ] propagate all mcp configs to their respective locations + w/ specific flavor of env substitution
+- [ ] propagate all agents files to their respective locations for each ai product
