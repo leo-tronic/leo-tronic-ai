@@ -80,6 +80,19 @@
         "-e",
         "{env:CONFLUENT_ENV_PATH}"
       ]
+    },
+    "MCP-JFrog": {
+      "type": "local",
+      "command": [
+        "npm",
+        "exec",
+        "-y",
+        "github:jfrog/mcp-jfrog"
+      ],
+      "environment": {
+        "JFROG_ACCESS_TOKEN": "{env:JFROG_ACCESS_TOKEN}",
+        "JFROG_URL": "{env:JFROG_URL}"
+      }
     }
   }
 }
