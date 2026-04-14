@@ -1,7 +1,10 @@
 # local docs
+docs/bugs/
 docs/features/
 docs/resources/
 docs/research/
+docs/designs/
+docs/tasks/
 temp/
 personal/
 

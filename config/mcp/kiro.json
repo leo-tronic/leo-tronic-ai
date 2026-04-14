@@ -65,6 +65,14 @@
         "-e",
         "${CONFLUENT_ENV_PATH}"
       ]
+    },
+    "slack": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.slack.com/mcp"
+      ]
     }
   }
 }

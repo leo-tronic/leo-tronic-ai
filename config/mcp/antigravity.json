@@ -54,6 +54,9 @@
                 "-e",
                 "YOUR_CONFLUENT_ENV_PATH"
             ]
+        },
+        "slack": {
+            "serverUrl": "https://mcp.slack.com/mcp"
         }
     }
 }

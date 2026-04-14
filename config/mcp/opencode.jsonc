@@ -1,13 +1,20 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "external_directory": {
+      "~/repos/leo-tronic-ai/**": "allow",
+      "~/.config/opencode/**": "allow",
+      "~/repos/OpenAPI/**": "allow",
+      "~/repos/drivewealth-cc/**": "allow"
+    }
+  },
   "mcp": {
-    "github": {
+    "github-local": {
       "type": "local",
       "command": [
         "npx",
         "-y",
-        "@github/github-mcp-server",
-        "stdio"
+        "@modelcontextprotocol/server-github"
       ],
       "enabled": true,
       "environment": {
@@ -16,6 +23,7 @@
     },
     "context7": {
       "type": "local",
+      "enabled": false,
       "command": [
         "npx",
         "-y",
@@ -23,7 +31,6 @@
         "--api-key",
         "{env:CONTEXT7_API_KEY}"
       ],
-      "enabled": true
     },
     "mcp-atlassian": {
       "type": "local",
@@ -43,7 +50,8 @@
     },
     "redpanda": {
       "type": "remote",
-      "url": "https://docs.redpanda.com/mcp"
+      "url": "https://docs.redpanda.com/mcp",
+      "enabled": false
     },
     "aws-documentation-mcp-server": {
       "type": "local",
@@ -51,28 +59,26 @@
         "uvx",
         "awslabs.aws-documentation-mcp-server@latest"
       ],
-      "enabled": true,
+      "enabled": false,
       "environment": {
         "FASTMCP_LOG_LEVEL": "ERROR",
         "AWS_DOCUMENTATION_PARTITION": "aws",
         "MCP_USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
       }
     },
-    // "Lucid Software": {
-    //   "type": "remote",
-    //   "url": "https://mcp.lucid.app/mcp"
-    // }
     "Lucid Software": {
       "type": "local",
+      "enabled": false,
       "command": [
         "npx",
         "-y",
         "mcp-remote",
         "https://mcp.lucid.app/mcp"
-      ],
+      ]
     },
     "Confluent": {
       "type": "local",
+      "enabled": false,
       "command": [
         "npx",
         "-y",
@@ -83,6 +89,7 @@
     },
     "MCP-JFrog": {
       "type": "local",
+      "enabled": false,
       "command": [
         "npm",
         "exec",
@@ -92,6 +99,63 @@
       "environment": {
         "JFROG_ACCESS_TOKEN": "{env:JFROG_ACCESS_TOKEN}",
         "JFROG_URL": "{env:JFROG_URL}"
+      }
+    },
+    "slack": {
+      "type": "local",
+      "enabled": false,
+      "command": [
+        "npx",
+        "-y",
+        "mcp-remote",
+        "https://mcp.slack.com/mcp",
+        "8080",
+        "--static-oauth-client-info",
+        "{\"client_id\":\"{env:SLACK_MCP_CLIENT_ID}\",\"client_secret\":\"{env:SLACK_MCP_CLIENT_SECRET}\"}"
+      ]
+    },
+    "slack-bot": {
+      "type": "local",
+      "enabled": true,
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-slack"
+      ],
+      "environment": {
+        "SLACK_BOT_TOKEN": "{env:SLACK_BOT_TOKEN}",
+        "SLACK_TEAM_ID": "E030L02LZ7E"
+      }
+    },
+    "grafana": {
+      "type": "local",
+      "enabled": false,
+      "command": ["uvx", "mcp-grafana"],
+      "environment": {
+        "GRAFANA_URL": "{env:GRAFANA_URL}",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "{env:GRAFANA_SERVICE_ACCOUNT_TOKEN}"
+      }
+    },
+    "drivewealth-api-accounts-local": {
+      "type": "local",
+      "command": ["npx", "-y", "@ivotoby/openapi-mcp-server"],
+      "environment": {
+        "OPENAPI_SPEC_PATH": "/Users/lscarano/repos/OpenAPI/src/AccountsAPI.yaml",
+        "API_BASE_URL": "http://localhost:9090",
+        "BO_PASSWORD_DEV": "{env:BO_PASSWORD_DEV}",
+        "BO_USERNAME_DEV": "{env:BO_USERNAME_DEV}"
+        //"CUSTOM_HEADERS": "{\"dw-client-app-key\": \"your_key_here\"}"
+      }
+    },
+    "servicenow": {
+      "type": "local",
+      "command": ["npx", "-y", "@aartiq/servicenow-mcp"],
+      "enabled": false,
+      "environment": {
+        "SN_INSTANCE_URL": "{env:SN_INSTANCE_URL}",
+        "SN_USERNAME": "{env:SN_USERNAME}",
+        "SN_PASSWORD": "{env:SN_PASSWORD}",
+        "SN_AUTH_TYPE": "{env:SN_AUTH_TYPE}" // "basic" or "oauth"
       }
     }
   }
